@@ -1,0 +1,25 @@
+#import <UIKit/UIKit.h>
+
+__attribute__((constructor)) static void initializeMyUI() {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // ดึงหน้าจอหลักของแอป
+        UIViewController *rootVC = [UIApplication sharedApplication].keyWindow.rootViewController;
+        
+        if (rootVC) {
+            // สร้างหน้าต่าง UI (Alert Box)
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"ระบบ UI ใหม่"
+                                                                           message:@"เชื่อมต่อไฟล์ .dylib บนมือถือสำเร็จแล้ว!"
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+            
+            // เพิ่มปุ่มกด
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"ตกลง"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:nil];
+            
+            [alert addAction:okAction];
+            
+            // สั่งให้แสดงผล UI ทับหน้าแอปเดิม
+            [rootVC presentViewController:alert animated:YES completion:nil];
+        }
+    });
+}
